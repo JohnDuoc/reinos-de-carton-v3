@@ -1,0 +1,570 @@
+/* ========================================================= */
+/* VARIABLES CSS */
+/* ========================================================= */
+
+/*
+  Las variables CSS permiten guardar valores reutilizables.
+  Si queremos cambiar el color principal del sitio,
+  lo hacemos una sola vez aquí.
+*/
+
+:root {
+  --color-principal: hwb(219 13% 64%);
+  --color-secundario: #d89b64;
+  --color-fondo: #f8f3ee;
+  --color-texto: #2d2d2d;
+  --color-blanco: #ffffff;
+  --color-suave: #fff7ef;
+  --color-exito: #1f7a4d;
+  --color-alerta: #b45309;
+
+  --fuente-principal: Arial, Helvetica, sans-serif;
+
+  --espaciado-pequeno: 10px;
+  --espaciado-medio: 20px;
+  --espaciado-grande: 40px;
+
+  --radio-borde: 16px;
+  --sombra-suave: 0 4px 14px rgba(0, 0, 0, 0.12);
+  --sombra-fuerte: 0 8px 24px rgba(0, 0, 0, 0.22);
+}
+
+/* ========================================================= */
+/* ESTILOS GENERALES */
+/* ========================================================= */
+
+/*
+  box-sizing: border-box ayuda a que width incluya padding y border.
+  Esto evita cálculos visuales confusos al diseñar.
+*/
+
+* {
+  box-sizing: border-box;
+}
+
+/*
+  body representa todo el documento visible.
+  Quitamos margin por defecto para controlar mejor el diseño.
+*/
+
+body {
+  margin: 0;
+  font-family: var(--fuente-principal);
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  line-height: 1.6;
+}
+
+/*
+  Las imágenes se adaptan al ancho disponible.
+  Esto ayuda a que no se desborden.
+*/
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/*
+  Contenedor reutilizable para limitar el ancho del contenido.
+  Así el sitio no queda demasiado extendido en pantallas grandes.
+*/
+
+.contenedor {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.encabezado {
+  min-height: 70vh;
+
+  /*
+    Fondo con degradado más imagen.
+    El degradado oscurece la imagen para que el texto se lea mejor.
+  */
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.55), rgba(92, 52, 34, 0.8)),
+    url("../img/principal.png");
+
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--color-blanco);
+}
+
+/*
+  Animación de entrada para el contenido del encabezado.
+*/
+
+.encabezado-contenido {
+  animation: aparecerDesdeAbajo 1s ease;
+}
+
+.encabezado h1 {
+  font-size: 3.8rem;
+  margin-bottom: var(--espaciado-pequeno);
+}
+
+.encabezado p {
+  font-size: 1.3rem;
+  margin-bottom: var(--espaciado-medio);
+}
+
+/* ========================================================= */
+/* BOTONES */
+/* ========================================================= */
+
+/*
+  Botón principal.
+  Usamos display: inline-block para poder aplicar padding y transform.
+*/
+
+.boton-principal,
+.boton-secundario {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/*
+  Botón usado sobre fondo oscuro.
+*/
+
+.boton-principal {
+  background-color: var(--color-secundario);
+  color: var(--color-principal);
+}
+
+/*
+  Animación tipo microinteracción.
+  Cuando el usuario pasa el mouse, el botón sube levemente.
+*/
+
+.boton-principal:hover,
+.boton-secundario:hover {
+  transform: translateY(-4px);
+}
+
+.boton-principal:hover {
+  background-color: var(--color-blanco);
+}
+
+/*
+  Botón secundario usado en contacto.
+*/
+
+.boton-secundario {
+  background-color: var(--color-principal);
+  color: var(--color-blanco);
+}
+
+/* ========================================================= */
+/* NAVEGACIÓN */
+/* ========================================================= */
+
+.navegacion {
+  background-color: var(--color-principal);
+  text-align: center;
+  padding: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/*
+  Los enlaces del menú se muestran en línea.
+*/
+
+/* --- ESTILOS PRINCIPALES DEL MENÚ --- */
+.navegacion ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; 
+    justify-content: center; /* CLAVE: Esto centra los elementos horizontalmente */
+    background-color: #333; /* Fondo oscuro para el menú */
+}
+
+.navegacion li {
+    position: relative; /* Necesario para que el submenú se alinee con su padre */
+}
+
+.navegacion a {
+    display: block;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.2s ease;
+}
+
+.navegacion a:hover {
+    background-color: #444; /* Color al pasar el mouse por los botones principales */
+}
+
+/* --- ESTILOS DEL SUBMENÚ DESPLEGABLE --- */
+.navegacion .submenu {
+    display: none; /* Oculto por defecto */
+    position: absolute;
+    top: 100%; /* Se despliega justo debajo */
+    left: 50%; /* CLAVE: Lo mueve al centro del botón padre */
+    transform: translateX(-50%); /* CLAVE: Lo centra perfectamente respecto a "Categoría" */
+    background-color: #222; /* Un tono un poco más oscuro para diferenciarlo */
+    min-width: 160px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2); /* Sombra suave para darle profundidad */
+    z-index: 10; /* Se asegura de quedar por encima de otros elementos */
+}
+
+.navegacion .submenu li {
+    width: 100%; /* Fuerza a las subcategorías a ocupar todo el ancho */
+}
+
+.navegacion .submenu a {
+    padding: 12px 15px;
+    font-size: 14px;
+    text-align: center; /* Centra también el texto dentro de las subcategorías */
+}
+
+.navegacion .submenu a:hover {
+    background-color: #555;
+}
+
+/* --- MOSTRAR SUBMENÚ AL PASAR EL MOUSE --- */
+.navegacion .tiene-submenu:hover .submenu {
+    display: block; /* Cambiado a block para que respete el centrado del transform */
+}
+
+.item-wrapper {
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 35px;
+    height: 35px;
+    margin: 10px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: rgba(127, 127, 127, 0.74);
+    border-radius: 50%;
+    background-color: rgb(0, 0, 0);
+    transition: opacity 300ms ease, background-color 300ms ease, border-color 300ms ease;
+    cursor: pointer;
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ========================================================= */
+/* SECCIONES GENERALES */
+/* ========================================================= */
+
+.seccion {
+  padding: var(--espaciado-grande) 0;
+}
+
+.seccion h2 {
+  text-align: center;
+  color: var(--color-principal);
+  font-size: 2.2rem;
+  margin-bottom: var(--espaciado-medio);
+}
+
+.texto-intro {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto var(--espaciado-grande);
+}
+
+/* ========================================================= */
+/* SECCIÓN NOSOTROS */
+/* ========================================================= */
+
+.nosotros {
+  background-color: var(--color-blanco);
+}
+
+.nosotros p {
+  max-width: 800px;
+  margin: 0 auto var(--espaciado-medio);
+  text-align: center;
+}
+
+/* ========================================================= */
+/* TARJETAS DEL MENÚ */
+/* ========================================================= */
+
+/*
+  Contenedor de tarjetas usando CSS Grid.
+  repeat(auto-fit, minmax(260px, 1fr)) permite que las tarjetas
+  se adapten automáticamente al espacio disponible.
+*/
+
+.contenedor-tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--espaciado-medio);
+}
+
+/*
+  Tarjeta de producto.
+  Aquí se aplica el modelo de caja:
+  - contenido
+  - padding interno
+  - borde redondeado
+  - sombra
+  - margen generado por el gap del contenedor
+*/
+
+.tarjeta {
+  background-color: var(--color-blanco);
+  border-radius: var(--radio-borde);
+  overflow: hidden;
+  box-shadow: var(--sombra-suave);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: aparecerSuave 0.8s ease;
+}
+
+/*
+  Segunda animación: hover en tarjetas.
+*/
+
+.tarjeta:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--sombra-fuerte);
+}
+
+.tarjeta img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+}
+
+/*
+  Contenido interno de la tarjeta.
+*/
+
+.tarjeta-contenido {
+  padding: var(--espaciado-medio);
+}
+
+.categoria {
+  display: inline-block;
+  background-color: var(--color-suave);
+  color: var(--color-principal);
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-bottom: var(--espaciado-pequeno);
+}
+
+.tarjeta h3 {
+  color: var(--color-principal);
+  margin-bottom: var(--espaciado-pequeno);
+}
+
+.precio {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--color-secundario);
+}
+
+.descuento {
+  color: var(--color-exito);
+  font-weight: bold;
+}
+
+.sin-descuento {
+  color: var(--color-alerta);
+  font-weight: bold;
+}
+
+/* ========================================================= */
+/* BENEFICIOS */
+/* ========================================================= */
+
+.beneficios {
+  background-color: var(--color-suave);
+}
+
+.contenedor-beneficios {
+  display: flex;
+  gap: var(--espaciado-medio);
+  justify-content: center;
+}
+
+.beneficio {
+  background-color: var(--color-blanco);
+  padding: var(--espaciado-medio);
+  border-radius: var(--radio-borde);
+  box-shadow: var(--sombra-suave);
+  flex: 1;
+  transition: transform 0.3s ease;
+}
+
+/*
+  Tercera animación: efecto al pasar el mouse por beneficio.
+*/
+
+.beneficio:hover {
+  transform: scale(1.03);
+}
+
+.beneficio h3 {
+  color: var(--color-principal);
+}
+
+/* ========================================================= */
+/* CONTACTO */
+/* ========================================================= */
+
+.contacto {
+  background-color: var(--color-blanco);
+  text-align: center;
+}
+
+/* ========================================================= */
+/* PIE DE PÁGINA */
+/* ========================================================= */
+
+.pie-pagina {
+  background-color: var(--color-principal);
+  color: var(--color-blanco);
+  text-align: center;
+  padding: var(--espaciado-medio);
+}
+
+/* ========================================================= */
+/* ANIMACIONES CSS */
+/* ========================================================= */
+
+/*
+  Animación 1:
+  Hace que el contenido aparezca subiendo suavemente.
+*/
+
+@keyframes aparecerDesdeAbajo {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
+  Animación 2:
+  Aparición suave para tarjetas.
+*/
+
+@keyframes aparecerSuave {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/*
+  Animación 3:
+  Se podría aplicar a elementos importantes si se desea destacar algo.
+*/
+
+@keyframes latidoSuave {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.04);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/*
+  Ejemplo de uso de la animación latidoSuave.
+  La aplicamos al botón principal.
+*/
+
+.boton-principal {
+  animation: latidoSuave 2.5s infinite;
+}
+
+/*
+  Animación 4:
+  Cambio suave de color en enlaces de navegación mediante transition.
+  Está definida en .navegacion a y .navegacion a:hover.
+*/
+
+/* ========================================================= */
+/* MEDIA QUERIES */
+/* ========================================================= */
+
+/*
+  Pantallas medianas: tablets o notebooks pequeños.
+*/
+
+@media (max-width: 900px) {
+  .encabezado h1 {
+    font-size: 3rem;
+  }
+
+  .contenedor-beneficios {
+    flex-direction: column;
+  }
+}
+
+/*
+  Pantallas pequeñas: celulares.
+*/
+
+@media (max-width: 600px) {
+  .encabezado {
+    min-height: 60vh;
+  }
+
+  .encabezado h1 {
+    font-size: 2.3rem;
+  }
+
+  .encabezado p {
+    font-size: 1rem;
+  }
+
+  /*
+    El menú pasa de enlaces horizontales a enlaces en bloque.
+  */
+  .navegacion a {
+    display: block;
+    margin: 8px 0;
+  }
+
+  .seccion {
+    padding: 30px 0;
+  }
+
+  .seccion h2 {
+    font-size: 1.8rem;
+  }
+
+  .tarjeta img {
+    height: 160px;
+  }
+}
